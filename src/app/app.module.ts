@@ -13,6 +13,8 @@ import { AppComponent } from './app.component';
 import { AlertComponent } from './_components';
 import { HomeComponent } from './home';
 
+import { environment } from '../environments/environment';
+
 @NgModule({
     imports: [
         BrowserModule,
@@ -30,8 +32,9 @@ import { HomeComponent } from './home';
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
 
-        // provider used to create fake backend
-        // fakeBackendProvider
+        // provider used to create fake backend (Stage A)
+        // automatically disabled in production mode (Stage B)
+        ...(environment.production ? [] : [fakeBackendProvider])
     ],
     bootstrap: [AppComponent]
 })
